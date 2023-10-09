@@ -1,0 +1,3 @@
+This module project is based on Graphical User Inteface with few areas(3 interfaces) of program having 2 button Run and Syntex. The Run button work is to run the code which we write on the first interface and display it on the another layout and Syntex button work is to perform syntex check.
+
+Moreover, Command Parser Class which include commands like when we used moveto command with it axis i.e moveto 100,100 it normally moves the red dotted cursor with 100 from x axis and 100 from y axis and many more. This class usually used to read and execute our commands. 
