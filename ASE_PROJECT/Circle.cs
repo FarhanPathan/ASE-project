@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ASE_PROJECT
 {
-    internal class Circle
+    internal class Circle : Shape
     {
     }
     public override void Draw(Graphics graphics, int x, int y)
