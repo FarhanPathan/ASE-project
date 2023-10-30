@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace ASE_PROJECT
 {
-    internal class Circle : Shape
+    public class Circle : Shape
     {
-    }
-    public override void Draw(Graphics graphics, int x, int y)
-    {
-        using (Brush brush = new SolidBrush(Color.Blue))
+        public override void DrawLayout(Graphics graphics, int x, int y)
         {
-            graphics.FillEllipse(brush, x, y, 100, 100);
+            using (Brush brush = new SolidBrush(Color.LightGreen))
+            {
+                graphics.FillEllipse(brush, x, y, 100, 100);
+            }
         }
     }
+    
 }

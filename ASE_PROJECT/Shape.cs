@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace ASE_PROJECT
 {
-    internal class Shape
+    public abstract class Shape
     {
-    }
-
-    public abstract Draw(Graphics graphics, int x, int y)
-    {
-
+        // Variable define with graphics class and with x and y layouts
+        public abstract void DrawLayout(Graphics graphics, int x, int y);
     }
 }

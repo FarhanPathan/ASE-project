@@ -16,5 +16,44 @@ namespace ASE_PROJECT
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string input = txtcmd.Text;
+
+            var (shapeName, x, y) = new CommandParser().ParseCommand(input, pictureBox1.Width, pictureBox1.Height);
+
+            if (shapeName != null)
+                
+            {
+                Shape shape = new MyShape().shapeCreation(shapeName);
+
+                if (shape != null)
+                {
+                    Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                    using (Graphics graphics = Graphics.FromImage(bitmap))
+                    {
+                        shape.DrawLayout(graphics, x, y);
+                    }
+
+                    pictureBox1.Image = bitmap;
+                }
+                else
+                {
+                    MessageBox.Show("Shape is not proper.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid Inputs.");
+            }
+        
+
+    }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
