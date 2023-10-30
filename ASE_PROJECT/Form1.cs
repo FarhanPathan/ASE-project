@@ -26,8 +26,18 @@ namespace ASE_PROJECT
             if (shapeName != null)
                 
             {
-                Shape shape = new MyShape().shapeCreation(shapeName);
+                
+                
+                if (shapeName == "circle")
+                {
+                    Shape shape1 = new Circle();
+                }
+                else if (shapeName == "rectangle")
+                {
+                    Shape shape2 = new Rectangle();
+                }
 
+                Shape shape = new MyShape().shapeCreation(shapeName);
                 if (shape != null)
                 {
                     Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
