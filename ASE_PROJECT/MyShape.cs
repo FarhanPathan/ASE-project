@@ -16,6 +16,8 @@ namespace ASE_PROJECT
                 {
                     case "circle":
                         return new Circle();
+                    case "rectangle":
+                        return new Rectangle();
                 default:
                         return null;
             }
