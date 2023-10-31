@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ASE_PROJECT
 {
-    public class Triangle
+    public class Triangle : Shape
     {
         public override void DrawLayout(Graphics graphics, int x, int y)
         {

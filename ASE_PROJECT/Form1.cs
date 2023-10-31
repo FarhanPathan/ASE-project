@@ -36,6 +36,10 @@ namespace ASE_PROJECT
                 {
                     Shape shape2 = new Rectangle();
                 }
+                else if (shapeName == "triangle")
+                {
+                    Shape shape3 = new Triangle();
+                }
 
                 Shape shape = new MyShape().shapeCreation(shapeName);
                 if (shape != null)
