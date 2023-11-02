@@ -17,10 +17,7 @@ namespace ASE_PROJECT
             }
 
             string shapeName = parts[0].ToLower();
-            if (!int.TryParse(parts[1], out int x) || !int.TryParse(parts[2], out int y))
-            {
-                return (null, 0, 0);
-            }
+            
 
             if (x < 0 || x >= canvasWidth || y < 0 || y >= canvasHeight)
             {
