@@ -11,18 +11,23 @@ namespace ASE_PROJECT
     {
             public Shape shapeCreation(string shapeName)
             {
-                // switch conditions for Shapes
-                switch (shapeName)
+                // if conditions for Shapes
+                if(shapeName == "circle")
                 {
-                    case "circle":
-                        return new Circle();
-                    case "rectangle":
-                        return new Rectangle();
-                    case "triangle":
+                    return new Circle();
+                }else if(shapeName == "rectangle")
+                {
+                return new Rectangle();
+                }
+                else if(shapeName == "triangle")
+                {
                     return new Triangle();
-                default:
-                        return null;
-            }
+                }
+                else
+                {
+                    return null;
+                }
+               
         }
         }
 

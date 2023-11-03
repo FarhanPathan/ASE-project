@@ -12,6 +12,8 @@ namespace ASE_PROJECT
 {
     public partial class Form1 : Form
     {
+        private List<Shape> storeShapes = new List<Shape>();
+
         public Form1()
         {
             InitializeComponent();
@@ -19,31 +21,23 @@ namespace ASE_PROJECT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string input = txtcmd.Text;
+            string commandinput = txtcmd.Text;
+            string multilineCmd = richTextBox1.Text;
 
-            var (shapeName, x, y) = new CommandParser().ParseCommand(input, pictureBox1.Width, pictureBox1.Height);
+
+            //string[] commands = commandinput.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+
+            var (shapeName, x, y) = new CommandParser().ParseCommand(commandinput, pictureBox1.Width, pictureBox1.Height);
 
             if (shapeName != null)
                 
-            {
-                
-                
-                if (shapeName == "circle")
-                {
-                    Shape shape1 = new Circle();
-                }
-                else if (shapeName == "rectangle")
-                {
-                    Shape shape2 = new Rectangle();
-                }
-                else if (shapeName == "triangle")
-                {
-                    Shape shape3 = new Triangle();
-                }
+            {   
 
                 Shape shape = new MyShape().shapeCreation(shapeName);
                 if (shape != null)
                 {
+                    storeShapes.Add(shape);
                     Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
                     using (Graphics graphics = Graphics.FromImage(bitmap))
                     {
@@ -69,5 +63,7 @@ namespace ASE_PROJECT
         {
 
         }
+
+        
     }
 }
