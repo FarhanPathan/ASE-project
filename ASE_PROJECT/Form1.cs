@@ -64,6 +64,15 @@ namespace ASE_PROJECT
 
         }
 
-        
+        private void button3_Click(object sender, EventArgs e)
+        {
+            txtcmd.Text = string.Empty;
+            richTextBox1.Text = string.Empty;
+
+            //private Bitmap canvasBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            //        pictureBox1.Image = canvasBitmap;
+
+        }
     }
 }
