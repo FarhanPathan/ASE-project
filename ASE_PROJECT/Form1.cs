@@ -84,5 +84,10 @@ namespace ASE_PROJECT
                 richTextBox1.LoadFile(selectedFileName, RichTextBoxStreamType.PlainText);
             }
         }
+
+        private void button3_Click_2(object sender, EventArgs e)
+        {
+
+        }
     }
 }
