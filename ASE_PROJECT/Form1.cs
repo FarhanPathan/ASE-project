@@ -74,5 +74,15 @@ namespace ASE_PROJECT
             //        pictureBox1.Image = canvasBitmap;
 
         }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            OpenFileDialog opentext = new OpenFileDialog();
+            if (opentext.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFileName = opentext.FileName;
+                richTextBox1.LoadFile(selectedFileName, RichTextBoxStreamType.PlainText);
+            }
+        }
     }
 }
