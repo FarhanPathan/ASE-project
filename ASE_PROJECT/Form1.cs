@@ -30,6 +30,18 @@ namespace ASE_PROJECT
 
             var (shapeName, x, y) = new CommandParser().ParseCommand(commandinput, pictureBox1.Width, pictureBox1.Height);
 
+            /*string line = "";
+            string[] words = line.Split(' ');
+            int lineNumber = 0;
+
+            if (words.Length != 3 || !int.TryParse(words[1], out int posX) || !int.TryParse(words[2], out int posY))
+            {
+                // Invalid parameters or extra parameters
+                //SyntaxErrorException(lineNumber, line, "Invalid MOVE command: (integer expected for x and y)");
+                MessageBox.Show(lineNumber.ToString(), line);
+                //return false;
+            }*/
+
             if (shapeName != null)
                 
             {   
@@ -41,6 +53,7 @@ namespace ASE_PROJECT
                     Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
                     using (Graphics graphics = Graphics.FromImage(bitmap))
                     {
+                       // MessageBox.Show(shapeName.ToString(),x.ToString()); 
                         shape.DrawLayout(graphics, x, y);
                     }
 
