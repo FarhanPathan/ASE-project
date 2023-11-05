@@ -87,6 +87,21 @@ namespace ASE_PROJECT
 
         private void button3_Click_2(object sender, EventArgs e)
         {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text Files (*.txt)|*.txt|RTF Files (*.rtf)|*.rtf";
+            saveFileDialog.AddExtension = true;
+            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                var extension = System.IO.Path.GetExtension(saveFileDialog.FileName);
+                if (extension.ToLower() == ".txt")
+                    richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.PlainText);
+                else
+                    richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
+            }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

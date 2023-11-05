@@ -84,6 +84,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(378, 264);
             this.richTextBox1.TabIndex = 12;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // btnClear
             // 
