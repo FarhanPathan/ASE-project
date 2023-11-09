@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+/*
+ * This file is parent file of all shapes and other commands
+ * It is 2 methods one for syntex checking and another for executing command with some variables like height and width etc*/
 
 namespace ASE_PROJECT
 {
-    public abstract class Shape
+
+
+    public interface Shape
     {
-        // Variable define with graphics class and with x and y layouts
-        public abstract void DrawLayout(Graphics graphics, int x, int y);
+        bool SyntaxCheck(string[] commandParts, bool showError = true);
+        void Execute(string[] commandParts, ref int x, ref int y, ref Color penColor, ref bool fillShapes, Graphics graphics);
     }
 }
