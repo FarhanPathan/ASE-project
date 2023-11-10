@@ -146,7 +146,7 @@ public class CommandParserNew
         if (!validCommands.Contains(firstWord) || firstWord != firstWord.ToUpper())
         {
             // Invalid commands
-            SyntaxErrorException(lineNumber, line, "Invalid command: (command must be in uppercase)");
+            SyntaxErrorException(lineNumber, line, "Invalid command");
             
             return false;
         }
