@@ -6,7 +6,7 @@ using ASE_PROJECT;
 /// <summary>
 /// Represents a command to toggle shape filling on or off.
 /// </summary>
-public class FillCommand : Shape
+public class Fill : Shape
 {
     public bool SyntaxCheck(string[] commandParts, bool showError = true)
     {

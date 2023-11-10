@@ -6,7 +6,7 @@ using ASE_PROJECT;
 /// <summary>
 /// Represents a MOVE command that moves the drawing cursor to a new position.
 /// </summary>
-public class MoveCommand : Shape
+public class Move : Shape
 {
     public bool SyntaxCheck(string[] commandParts, bool showError = true)
     {
@@ -15,7 +15,7 @@ public class MoveCommand : Shape
         {
             string errorMessage = "Syntax error: MOVE command should have 2 arguments. X and Y axis.";
             if (showError)
-                //MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
         }
 
@@ -23,7 +23,7 @@ public class MoveCommand : Shape
         {
             string errorMessage = "Syntax error: MOVE command arguments should be integers. X and Y axis.";
             if (showError)
-                //MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
         }
 

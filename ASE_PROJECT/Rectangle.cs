@@ -6,7 +6,7 @@ using ASE_PROJECT;
 /// <summary>
 /// Represents a command to draw a rectangle.
 /// </summary>
-public class RectangleCommand : Shape
+public class Rectangle : Shape
 {
    
     public bool SyntaxCheck(string[] commandParts, bool showError = true)

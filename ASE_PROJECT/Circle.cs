@@ -6,7 +6,7 @@ using ASE_PROJECT;
 /// <summary>
 /// Represents a command to draw a circle.
 /// </summary>
-public class CircleCommand : Shape
+public class Circle : Shape
 {
 
     public bool SyntaxCheck(string[] commandParts, bool showError = true)

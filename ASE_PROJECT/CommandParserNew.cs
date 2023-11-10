@@ -16,8 +16,9 @@ public class CommandParserNew
     private Graphics graphics;
     private int x;
     private int y;
-    private Color penColor = Color.SkyBlue;
+    private Color penColor = Color.Black;
     private bool fillShapes = false;
+    
 
     /// <summary>
     /// Initializes a new instance of the CommandParser class.
@@ -34,11 +35,14 @@ public class CommandParserNew
         // Initialize the command dictionary with command names and their respective Shape Iterations
         commandDictionary = new Dictionary<string, Shape>
         {
-            { "RECTANGLE", new RectangleCommand() },
-            { "CIRCLE", new CircleCommand() },
-            { "TRIANGLE", new TriangleCommand() },
-            { "MOVE", new MoveCommand() },
+            { "RECTANGLE", new Rectangle() },
+            { "CIRCLE", new Circle() },
+            { "TRIANGLE", new Triangle() },
+            { "MOVE", new Move() },
             { "COLOR", new ColorCommand() },
+            { "FILL", new Fill() },
+            { "DRAW", new Draw() },
+            { "RESET", new Reset() }
         };
     }
 
@@ -143,6 +147,7 @@ public class CommandParserNew
         {
             // Invalid commands
             SyntaxErrorException(lineNumber, line, "Invalid command: (command must be in uppercase)");
+            
             return false;
         }
 

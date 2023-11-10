@@ -14,6 +14,7 @@ namespace ASE_PROJECT
         public Form1()
         {
             InitializeComponent();
+            lblError.Visible = false;
             parser = new CommandParserNew(pictureBox1.CreateGraphics());
         }
 
@@ -22,6 +23,7 @@ namespace ASE_PROJECT
             string commandinput = txtcmd.Text.Trim(); ;
             if (commandinput == "")
             {
+                txtcmd.Text = "RUN";
                 if (txtcmd.Text.Trim() == "")
                 {
                     MessageBox.Show("Please enter a command with UPPERCASE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -44,7 +46,7 @@ namespace ASE_PROJECT
                 }
 
                 parser.ExecuteProgram(program);
-                txtcmd.Text = "RUN";
+                
             }
             else
             {
@@ -54,13 +56,14 @@ namespace ASE_PROJECT
                 }
 
                 parser.ExecuteCommand(commandinput);
+                
             }
 
             Point currentPosition = parser.GetCurrentPosition();
             bool isFillOn = parser.IsFillOn();
             string currentColor = parser.GetCurrentColor();
 
-            //statusLabel.Text = $"Position: {currentPosition}\nFill: {(isFillOn ? "On" : "Off")}\nColor: {currentColor}";
+            statusLabel.Text = $"Position: {currentPosition}";
 
         }
 
@@ -112,6 +115,9 @@ namespace ASE_PROJECT
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
