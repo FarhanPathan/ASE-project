@@ -1,19 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using ASE_PROJECT;
 
-namespace ASE_PROJECT
+/// <summary>
+/// Represents a command to draw a rectangle.
+/// </summary>
+public class RectangleCommand : Shape
 {
-    public class Rectangle : Shape
+   
+    public bool SyntaxCheck(string[] commandParts, bool showError = true)
     {
-        public override void DrawLayout(Graphics graphics, int x, int y)
+        // The RECTANGLE command should have 3 parts: RECTANGLE, width, and height
+        if (commandParts.Length != 3)
         {
-            using (Brush brush = new SolidBrush(Color.BlueViolet))
+            string errorMessage = "Syntax error: RECTANGLE command should have 2 arguments.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        if (!int.TryParse(commandParts[1], out int width) || width <= 0)
+        {
+            string errorMessage = "Syntax error: Invalid width for RECTANGLE command.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        if (!int.TryParse(commandParts[2], out int height) || height <= 0)
+        {
+            string errorMessage = "Syntax error: Invalid height for RECTANGLE command.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Executes the RECTANGLE command to draw a rectangle.
+    /// </summary>
+    /// <param name="commandParts">An array of command parts.</param>
+    /// <param name="x">The current x-coordinate.</param>
+    /// <param name="y">The current y-coordinate.</param>
+    /// <param name="penColor">The color of the drawing pen.</param>
+    /// <param name="fillShapes">A boolean indicating whether shapes should be filled.</param>
+    /// <param name="graphics">The Graphics object for drawing.</param>
+    public void Execute(string[] commandParts, ref int x, ref int y, ref Color penColor, ref bool fillShapes, Graphics graphics)
+    {
+        if (SyntaxCheck(commandParts))
+        {
+            if (int.TryParse(commandParts[1], out int width) && width > 0 &&
+                int.TryParse(commandParts[2], out int height) && height > 0)
             {
-                graphics.FillRectangle(brush, x, y, 150, 100);
+                using (Pen pen = new Pen(penColor))
+                {
+                    if (fillShapes)
+                    {
+                        using (SolidBrush brush = new SolidBrush(penColor))
+                        {
+                            graphics.FillRectangle(brush, x, y, width, height);
+                        }
+                    }
+                    else
+                    {
+                        graphics.DrawRectangle(pen, x, y, width, height);
+                    }
+                }
             }
         }
     }

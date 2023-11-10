@@ -1,20 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using ASE_PROJECT;
 
-namespace ASE_PROJECT
+/// <summary>
+/// Represents a command to draw a triangle.
+/// </summary>
+public class TriangleCommand : Shape
 {
-    public class Triangle : Shape
+    public bool SyntaxCheck(string[] commandParts, bool showError = true)
     {
-        public override void DrawLayout(Graphics graphics, int x, int y)
+        // The TRIANGLE command should have 3 parts: TRIANGLE, width, and height
+        if (commandParts.Length != 3)
         {
-            Point[] points = { new Point(x, y), new Point(x + 100, y), new Point(x + 50, y + 100) };
-            using (Brush brush = new SolidBrush(Color.Green))
+            string errorMessage = "Syntax error: TRIANGLE command should have 2 arguments.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        if (!int.TryParse(commandParts[1], out int baseLength) || baseLength <= 0)
+        {
+            string errorMessage = "Syntax error: Invalid base length for TRIANGLE command.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        if (!int.TryParse(commandParts[2], out int height) || height <= 0)
+        {
+            string errorMessage = "Syntax error: Invalid height for TRIANGLE command.";
+            if (showError)
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Executes the TRIANGLE command to draw a triangle.
+    /// </summary>
+    /// <param name="commandParts">An array of command parts.</param>
+    /// <param name="x">The current x-coordinate.</param>
+    /// <param name="y">The current y-coordinate.</param>
+    /// <param name="penColor">The color of the drawing pen.</param>
+    /// <param name="fillShapes">A boolean indicating whether shapes should be filled.</param>
+    /// <param name="graphics">The Graphics object for drawing.</param>
+    public void Execute(string[] commandParts, ref int x, ref int y, ref Color penColor, ref bool fillShapes, Graphics graphics)
+    {
+        if (SyntaxCheck(commandParts))
+        {
+            if (int.TryParse(commandParts[1], out int baseLength) && baseLength > 0 &&
+                int.TryParse(commandParts[2], out int height) && height > 0)
             {
-                graphics.FillPolygon(brush, points);
+                using (Pen pen = new Pen(penColor))
+                {
+                    Point[] points = new Point[3];
+                    points[0] = new Point(x, y);
+                    points[1] = new Point(x + baseLength, y);
+                    points[2] = new Point(x + (baseLength / 2), y - height);
+
+                    if (fillShapes)
+                    {
+                        using (SolidBrush brush = new SolidBrush(penColor))
+                        {
+                            graphics.FillPolygon(brush, points);
+                        }
+                    }
+                    else
+                    {
+                        graphics.DrawPolygon(pen, points);
+                    }
+                }
             }
         }
     }
