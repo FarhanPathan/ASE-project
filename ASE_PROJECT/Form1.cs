@@ -118,7 +118,16 @@ namespace ASE_PROJECT
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string programText = txtMultiline.Text;
 
+            if (parser.SyntaxCheckProgram(programText))
+            {
+                MessageBox.Show("Syntax check successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Syntax was not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtMultiline_TextChanged(object sender, EventArgs e)

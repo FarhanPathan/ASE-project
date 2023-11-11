@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorUnitTest.cs" />
+    <Compile Include="FillUnitTest.cs" />
     <Compile Include="MoveUnitTest.cs" />
     <Compile Include="RectangleUnitTest.cs" />
     <Compile Include="CircleUnitTest.cs" />
