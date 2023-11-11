@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ASE_PROJECT_UNITTEST
 {
     [TestClass]
-    public class UnitTest1
+    public class CircleUnitTest
     {
         [TestMethod]
         public void ValidSyntex()

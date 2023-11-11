@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using ASE_PROJECT;
 
 namespace ASE_PROJECT
 {
@@ -46,7 +47,7 @@ namespace ASE_PROJECT
                 }
 
                 parser.ExecuteProgram(program);
-                
+
             }
             else
             {
@@ -56,14 +57,14 @@ namespace ASE_PROJECT
                 }
 
                 parser.ExecuteCommand(commandinput);
-                
+
             }
 
             Point currentPosition = parser.GetCurrentPosition();
             bool isFillOn = parser.IsFillOn();
             string currentColor = parser.GetCurrentColor();
 
-            statusLabel.Text = $"Position: {currentPosition}";
+            statusLabel.Text = $"Position:" +currentPosition;
 
         }
 
@@ -119,5 +120,14 @@ namespace ASE_PROJECT
         {
 
         }
-    }
+
+        private void txtMultiline_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+     }
 }
+
+
+ 

@@ -116,6 +116,7 @@
             this.txtMultiline.Name = "txtMultiline";
             this.txtMultiline.Size = new System.Drawing.Size(360, 351);
             this.txtMultiline.TabIndex = 16;
+            this.txtMultiline.TextChanged += new System.EventHandler(this.txtMultiline_TextChanged);
             // 
             // statusLabel
             // 
