@@ -51,6 +51,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorUnitTest.cs" />
     <Compile Include="MoveUnitTest.cs" />
     <Compile Include="RectangleUnitTest.cs" />
     <Compile Include="CircleUnitTest.cs" />
