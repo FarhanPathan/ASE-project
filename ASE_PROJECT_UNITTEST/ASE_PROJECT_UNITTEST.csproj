@@ -58,6 +58,7 @@
     <Compile Include="RectangleUnitTest.cs" />
     <Compile Include="CircleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetUnitTest.cs" />
     <Compile Include="TriangleUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
