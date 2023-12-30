@@ -37,7 +37,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.txtMultiline = new System.Windows.Forms.TextBox();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.lblError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,21 +126,11 @@
             this.statusLabel.TabIndex = 17;
             this.statusLabel.Text = "Position";
             // 
-            // lblError
-            // 
-            this.lblError.AutoSize = true;
-            this.lblError.Location = new System.Drawing.Point(424, 71);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(36, 16);
-            this.lblError.TabIndex = 18;
-            this.lblError.Text = "Error";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 553);
-            this.Controls.Add(this.lblError);
+            this.ClientSize = new System.Drawing.Size(823, 530);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.txtMultiline);
             this.Controls.Add(this.btnSave);
@@ -170,7 +159,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtMultiline;
         private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.Label lblError;
     }
 }
 

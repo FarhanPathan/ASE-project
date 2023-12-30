@@ -35,6 +35,7 @@ public class Reset : Shape
             // Reset the drawing state to default values, including penColor and fillShapes
             x = 0;
             y = 0;
+            
             penColor = Color.Black;
             fillShapes = false;
         }

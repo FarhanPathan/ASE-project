@@ -31,7 +31,7 @@ namespace ASE_PROJECT_UNITTEST
         {
             // Arrange
             var move = new Move();
-            string[] commandParts = { "MOVE", "abc", "50" }; // Non-integer X position
+            string[] commandParts = { "MOVE", "ABC", "50" }; // Non-integer X position
 
             // Act
             bool result = move.SyntaxCheck(commandParts, false);
@@ -45,7 +45,7 @@ namespace ASE_PROJECT_UNITTEST
         {
             // Arrange
             var move = new Move();
-            string[] commandParts = { "MOVE", "50", "abc" }; // Non-integer Y position
+            string[] commandParts = { "MOVE", "50", "ABC" }; // Non-integer Y position
 
             // Act
             bool result = move.SyntaxCheck(commandParts, false);

@@ -61,6 +61,7 @@ public class CommandParserNew
 
         // Initial one is the command name or shape name
         string commandName = parts[0].ToUpper();
+        
 
         if (commandDictionary.ContainsKey(commandName))
         {
@@ -141,7 +142,7 @@ public class CommandParserNew
             return true;
         }
 
-        // Check if the initial word is a valid command and it's in uppercase
+        // Check if the initial word is a valid command
         string firstWord = words[0].Trim();
         if (!validCommands.Contains(firstWord) || firstWord != firstWord.ToUpper())
         {

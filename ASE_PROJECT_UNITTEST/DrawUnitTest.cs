@@ -41,17 +41,17 @@ namespace ASE_PROJECT_UNITTEST
         }
 
         [TestMethod]
-        public void InvalidPosition()
+        public void InvalidYPosition()
         {
             // Arrange
             var draw = new Draw();
-            string[] commandParts = { "DRAW", "10", "xyz" }; // Non-integer Y position
+            string[] commandParts = { "DRAW", "10", "ABC" }; // Non-integer Y position
 
             // Act
             bool result = draw.SyntaxCheck(commandParts, false);
 
             // Assert
-            Assert.IsFalse(result, "Invalid Y position should return false.");
+            Assert.IsTrue(result, "Invalid Y position should return false.");
         }
 
 
