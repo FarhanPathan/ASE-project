@@ -68,29 +68,10 @@ namespace ASE_PROJECT
             statusLabel.Text = $"Position:" +currentPosition;
 
         }
-        // For Loop Testing
-        private void Run()
-        {
-            int dy = 1;
-            int ux = 1;
-            int lr = 1;
-            ball = 0;
-            square = 150;
-            rect = 95;
-
-            while (true)
-            {
-                for (int i = 0; i < 140; i++)
-                {
-                    ball += dy;
-                    Invalidate();
-                    Thread.Sleep(10);
-                }
-            }
-        }
+        
 
 
-                private void button3_Click(object sender, EventArgs e)
+       private void button3_Click(object sender, EventArgs e)
         {
             txtcmd.Text = string.Empty;
             txtMultiline.Text = string.Empty;
