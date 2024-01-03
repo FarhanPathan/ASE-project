@@ -49,6 +49,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="ColorCommand.cs" />
     <Compile Include="CommandParserNew.cs" />
+    <Compile Include="Conditions\Method.cs" />
     <Compile Include="Conditions\Variable.cs" />
     <Compile Include="Draw.cs" />
     <Compile Include="Fill.cs" />
