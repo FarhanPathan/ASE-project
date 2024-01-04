@@ -56,8 +56,8 @@ namespace ASE_PROJECT
                 {
                     return;
                 }
-
-                parser.ExecuteCommand(commandinput);
+                int i = 0;
+                parser.ExecuteCommand(commandinput,ref i);
 
             }
 

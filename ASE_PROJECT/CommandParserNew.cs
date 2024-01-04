@@ -2,115 +2,123 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ASE_PROJECT;
 using System.Windows.Forms;
+using System.Windows.Input;
+using ASE_PROJECT;
 
-// <summary>
-// This class work is to split the inputs then parse and execute command for shapes and other commands.
-// </summary>
+/// <summary>
+/// Parses and executes commands for drawing shapes and graphics operations.
+/// </summary>
 public class CommandParserNew
 {
-    private Dictionary<string, Shape> commandDictionary;
     private Graphics graphics;
     private int x;
     private int y;
     private Color penColor = Color.Black;
     private bool fillShapes = false;
-    
+    private Dictionary<string, int> variables;
+    private Dictionary<string, int> tempVariables = new Dictionary<string, int>();
+    private Dictionary<string, string[]> methods;
+    private Dictionary<string, string[]> tempMethods = new Dictionary<string, string[]>();
+    private Dictionary<string, Shape> commandDictionary;
+    private Dictionary<string, ISpecialCommand> specialCommandsDictionary;
+    private Stack<bool> isExecutingSpecialCommandStack = new Stack<bool>();
+    // stack of special commands, first in last out
+    private Stack<string> specialCommandsStack = new Stack<string>();
 
     /// <summary>
     /// Initializes a new instance of the CommandParser class.
     /// </summary>
     /// <param name="graphics">The Graphics object for drawing.</param>
-    /// <param name="X">Use to get X-coordinate.</param>
-    /// <param name="Y">Use to get Y-coordinate.</param>
+    /// <param name="initialX">The initial X-coordinate.</param>
+    /// <param name="initialY">The initial Y-coordinate.</param>
     public CommandParserNew(Graphics graphics, int initialX = 0, int initialY = 0)
     {
         this.graphics = graphics;
         this.x = initialX;
         this.y = initialY;
+        this.variables = new Dictionary<string, int>();
+        this.methods = new Dictionary<string, string[]>();
 
-        // Initialize the command dictionary with command names and their respective Shape Iterations
+        // add an initial false value to the stack
+        isExecutingSpecialCommandStack.Push(false);
+
+        // Initialize the command dictionary with command names and their respective ICommand implementations
         commandDictionary = new Dictionary<string, Shape>
         {
+            { "MOVE", new Move() },
+            { "DRAW", new Draw() },
+            { "RESET", new Reset() },
             { "RECTANGLE", new Rectangle() },
             { "CIRCLE", new Circle() },
             { "TRIANGLE", new Triangle() },
-            { "MOVE", new Move() },
             { "COLOR", new ColorCommand() },
-            { "FILL", new Fill() },
-            { "DRAW", new Draw() },
-            { "RESET", new Reset() }
+            { "FILL", new Fill() }
+            // Can add entries for other commands
         };
+
+        // Add the special commands
+        specialCommandsDictionary = new Dictionary<string, ISpecialCommand>
+        {
+            { "VAR", new VariableCommand() },
+            { "IF", new IfCommand() },
+            { "METHOD", new MethodCommand() }
+        };
+
+        // Add the end command for each special command, same class
+        specialCommandsDictionary.Add("ENDIF", specialCommandsDictionary["IF"]);
+        specialCommandsDictionary.Add("ENDMETHOD", specialCommandsDictionary["METHOD"]);
     }
 
     /// <summary>
-    /// Executes a single line command based on the inputs.
+    /// Executes a single command based on the provided command text.
     /// </summary>
     /// <param name="commandText">The text of the command to execute.</param>
-    public void ExecuteCommand(string commandText)
-    {
-        string[] parts = commandText.Split(' ');
-
-        if (parts.Length == 0)
-        {
-            return;
-        }
-
-        // Initial one is the command name or shape name
-        string commandName = parts[0].ToUpper();
-        
-
-        if (commandDictionary.ContainsKey(commandName))
-        {
-            Shape command = commandDictionary[commandName];
-
-            if (command.SyntaxCheck(parts))
-            {
-                command.Execute(parts, ref x, ref y, ref penColor, ref fillShapes, graphics);
-            }
-            else
-            {
-                // Handle syntax error
-                MessageBox.Show("Syntax error: " + commandName + " command format proper.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        else
-        {
-            // Handle run-time command
-            MessageBox.Show("Error: Unsupported command - " + commandName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
+    /// <param name="i">The index of the command line in the program.</param>
+    ///
 
     /// <summary>
-    /// Executes a multi-line command based on the inputs.
-    /// </summary>
-    /// <param name="program">The program to execute.</param>
-    public void ExecuteProgram(string program)
+    /// 
+    public void ResetProgram()
     {
         graphics.Clear(Color.LightGray);
         x = 0;
         y = 0;
         penColor = Color.Black;
         fillShapes = false;
+        isExecutingSpecialCommandStack.Clear();
+        isExecutingSpecialCommandStack.Push(false);
+        specialCommandsStack.Clear();
+        variables.Clear();
+        methods.Clear();
+    }
 
+    /// <summary>
+    /// Executes a program consisting of multiple commands.
+    /// </summary>
+    /// <param name="program">The program to execute.</param>
+    public void ExecuteProgram(string program)
+    {
         string[] lines = program.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-        foreach (string line in lines)
+        int index = 0;
+        while (index < lines.Length)
         {
-            ExecuteCommand(line);
+            ExecuteCommand(lines[index], ref index);
+            index++;
         }
     }
 
     /// <summary>
-    /// Checks the syntax of the multi-line commands.
+    /// Checks the syntax of a program consisting of multiple commands.
     /// </summary>
     /// <param name="program">The program to check.</param>
     public bool SyntaxCheckProgram(string program)
     {
         string[] lines = program.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+        tempVariables.Clear();
+        tempMethods.Clear();
 
         for (int i = 0; i < lines.Length; i++)
         {
@@ -124,7 +132,7 @@ public class CommandParserNew
     }
 
     /// <summary>
-    /// Checks the syntax of a multi-line command.
+    /// Checks the syntax of a single command.
     /// </summary>
     /// <param name="line">The command to check.</param>
     /// <param name="lineNumber">The line number of the command.</param>
@@ -132,6 +140,7 @@ public class CommandParserNew
     {
         // Syntax rules
         string[] validCommands = commandDictionary.Keys.ToArray();
+        validCommands = validCommands.Concat(specialCommandsDictionary.Keys.ToArray()).ToArray();
 
         // Split the line into words
         string[] words = line.Split(' ');
@@ -142,17 +151,81 @@ public class CommandParserNew
             return true;
         }
 
-        // Check if the initial word is a valid command
-        string firstWord = words[0].Trim();
-        if (!validCommands.Contains(firstWord) || firstWord != firstWord.ToUpper())
+        // Parse the variables
+        if (!VariableCommand.ParseVariables(ref words, tempVariables))
         {
-            // Invalid commands
-            SyntaxErrorException(lineNumber, line, "Invalid command");
-            
+            SyntaxErrorException(lineNumber, line, "Invalid variable.");
             return false;
         }
 
-        if (commandDictionary.ContainsKey(firstWord))
+        if (VariableCommand.IsVariableAssignment(words))
+        {
+            // Variable assignment
+            tempVariables[words[0]] = 1;
+            return true;
+        }
+
+        // Check if the command is a method Assignment
+        if (MethodCommand.IsMethodAssignment(words))
+        {
+            // Method assignment
+            tempMethods[words[1].Substring(0, words[1].IndexOf("("))] = new string[3];
+            tempMethods[words[1].Substring(0, words[1].IndexOf("("))][0] = words[1].Substring(words[1].IndexOf("(") + 1, words[1].IndexOf(")") - words[1].IndexOf("(") - 1);
+
+            // add temp variables from parameters
+            string[] parameters = tempMethods[words[1].Substring(0, words[1].IndexOf("("))][0].Split(',');
+            foreach (string parameter in parameters)
+            {
+                string parameterName = parameter.Trim();
+                tempVariables.Add(parameterName + "_METHOD", 1);
+            }
+
+            return true;
+        }
+
+        // Check if the command is a method call
+        if (MethodCommand.IsMethodCall(words))
+        {
+            // Method call
+            if (!tempMethods.ContainsKey(words[0].Substring(0, words[0].IndexOf("("))))
+            {
+                SyntaxErrorException(lineNumber, line, "Invalid method call. Method " + words[0] + " is not defined.");
+                return false;
+            }
+
+            // if (!tempMethods[words[0].Substring(0, words[0].IndexOf("("))][0].Length.Equals(words[0].Substring(words[0].IndexOf("(") + 1, words[0].IndexOf(")") - words[0].IndexOf("(") - 1)))
+            // {
+            //     SyntaxErrorException(lineNumber, line, "Invalid method parameter. Method " + words[0] + " expects " + tempMethods[words[0].Substring(0, words[0].IndexOf("("))][0] + " parameter(s).");
+            //     return false;
+            // }
+
+            return true;
+        }
+
+        // Check if the first word is a valid command and it's in uppercase
+        string firstWord = words[0].Trim();
+        if (firstWord != firstWord.ToUpper())
+        {
+            // Invalid command
+            SyntaxErrorException(lineNumber, line, "Invalid command: (command must be in uppercase, valid commands are: " + string.Join(", ", validCommands) + ", RUN)");
+            return false;
+        }
+
+        if (specialCommandsDictionary.ContainsKey(firstWord))
+        {
+            ISpecialCommand command = specialCommandsDictionary[firstWord];
+
+            if (command.SyntaxCheck(words, ref tempVariables, ref tempMethods, false))
+            {
+                return true;
+            }
+            else
+            {
+                SyntaxErrorException(lineNumber, line, "Syntax error in " + firstWord + " command.");
+                return false;
+            }
+        }
+        else if (commandDictionary.ContainsKey(firstWord))
         {
             Shape command = commandDictionary[firstWord];
 
@@ -182,7 +255,6 @@ public class CommandParserNew
     /// <param name="message">The error message.</param>
     private void SyntaxErrorException(int line, string command, string message = "")
     {
-        //Alert shown in box
         MessageBox.Show("Syntax error at line " + line + ": " + command + "\n" + message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
