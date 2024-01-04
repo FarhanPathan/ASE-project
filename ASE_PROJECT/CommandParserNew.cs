@@ -79,7 +79,39 @@ public class CommandParserNew
 
     /// <summary>
     /// 
-    public void ResetProgram()
+    public void ExecuteCommand(string commandText, ref int i)
+    {
+        string[] parts = commandText.Split(' ');
+
+        if (parts.Length == 0)
+        {
+            return; // Handle empty command
+        }
+
+        // First word is the command name
+        string commandName = parts[0].ToUpper();
+
+        // Check if the command is a variable assignment, reassignment or method call
+        if (variables.ContainsKey(commandName) || VariableCommand.IsVariableAssignment(parts))
+        {
+            commandName = "VAR";
+        }
+
+        if (MethodCommand.IsMethodCall(parts))
+        {
+            commandName = "METHOD";
+        }
+
+        if (!isExecutingSpecialCommandStack.Peek())
+        {
+            // Parse the variables
+            if (!VariableCommand.ParseVariables(ref parts, variables))
+            {
+                return;
+            }
+        }
+    }
+        public void ResetProgram()
     {
         graphics.Clear(Color.LightGray);
         x = 0;
