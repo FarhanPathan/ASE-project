@@ -45,7 +45,7 @@ namespace ASE_PROJECT_UNITTEST
         {
             // Arrange
             var fill = new Fill();
-            string[] commandParts = { "FILL", "ON" }; // Invalid fill value
+            string[] commandParts = { "FILL", "OnN" }; // Invalid fill value
 
             // Act
             bool result = fill.SyntaxCheck(commandParts, false);

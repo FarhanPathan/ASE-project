@@ -53,8 +53,7 @@ public class CommandParserNew
             { "CIRCLE", new Circle() },
             { "TRIANGLE", new Triangle() },
             { "COLOR", new ColorCommand() },
-            { "FILL", new Fill() },
-            { "WRITE", new Write() }
+            { "FILL", new Fill() }
             // Can add entries for other commands
         };
 
