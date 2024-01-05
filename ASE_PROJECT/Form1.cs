@@ -136,7 +136,11 @@ namespace ASE_PROJECT
 
         }
 
-     }
+        private void btnThread_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
 
 

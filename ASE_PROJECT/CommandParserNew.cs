@@ -54,7 +54,7 @@ public class CommandParserNew
             { "TRIANGLE", new Triangle() },
             { "COLOR", new ColorCommand() },
             { "FILL", new Fill() },
-            
+            { "WRITE", new Write() }
             // Can add entries for other commands
         };
 

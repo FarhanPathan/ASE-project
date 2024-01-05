@@ -37,6 +37,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.txtMultiline = new System.Windows.Forms.TextBox();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.btnThread = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +127,22 @@
             this.statusLabel.TabIndex = 17;
             this.statusLabel.Text = "Position";
             // 
+            // btnThread
+            // 
+            this.btnThread.Location = new System.Drawing.Point(424, 433);
+            this.btnThread.Name = "btnThread";
+            this.btnThread.Size = new System.Drawing.Size(75, 23);
+            this.btnThread.TabIndex = 18;
+            this.btnThread.Text = "Thread";
+            this.btnThread.UseVisualStyleBackColor = true;
+            this.btnThread.Click += new System.EventHandler(this.btnThread_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 530);
+            this.Controls.Add(this.btnThread);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.txtMultiline);
             this.Controls.Add(this.btnSave);
@@ -159,6 +171,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtMultiline;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Button btnThread;
     }
 }
 
