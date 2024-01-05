@@ -68,6 +68,7 @@ public class CommandParserNew
         // Add the end command for each special command, same class
         specialCommandsDictionary.Add("ENDIF", specialCommandsDictionary["IF"]);
         specialCommandsDictionary.Add("ENDMETHOD", specialCommandsDictionary["METHOD"]);
+        specialCommandsDictionary.Add("ENDWHILE", specialCommandsDictionary["WHILE"]);
     }
 
     /// <summary>
@@ -78,7 +79,6 @@ public class CommandParserNew
     ///
 
     /// <summary>
-    /// 
     public void ExecuteCommand(string commandText, ref int i)
     {
         string[] parts = commandText.Split(' ');
@@ -110,8 +110,58 @@ public class CommandParserNew
                 return;
             }
         }
+        // Check if a special command is being executed
+        if (isExecutingSpecialCommandStack.Peek() || specialCommandsDictionary.ContainsKey(commandName))
+        {
+            commandName = isExecutingSpecialCommandStack.Peek() ? specialCommandsStack.Peek() : commandName;
+            ISpecialCommand command = specialCommandsDictionary[commandName];
+
+
+            // Syntax check on special commands is only required when not executing a special command
+            // It will be handled by the special command itself
+            if (!isExecutingSpecialCommandStack.Peek())
+            {
+                if (!command.SyntaxCheck(parts, ref variables, ref methods))
+                {
+                    // Handle syntax error
+                    MessageBox.Show("Syntax error: " + commandName + " command is not formatted correctly.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            command.Execute(
+                parts,
+                ref variables,
+                ref methods,
+                ref isExecutingSpecialCommandStack,
+                ref specialCommandsStack,
+                ref i
+            );
+
+            return;
+        }
+
+        if (commandDictionary.ContainsKey(commandName))
+        {
+            Shape command = commandDictionary[commandName];
+
+            if (command.SyntaxCheck(parts))
+            {
+                command.Execute(parts, ref x, ref y, ref penColor, ref fillShapes, graphics);
+            }
+            else
+            {
+                // Handle syntax error
+                MessageBox.Show("Syntax error: " + commandName + " command is not formatted correctly.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        else
+        {
+            // Handle unsupported command
+            MessageBox.Show("Error: Unsupported command - " + commandName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
-        public void ResetProgram()
+    public void ResetProgram()
     {
         graphics.Clear(Color.LightGray);
         x = 0;
