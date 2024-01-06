@@ -61,6 +61,7 @@
     <Compile Include="ResetUnitTest.cs" />
     <Compile Include="TriangleUnitTest.cs" />
     <Compile Include="IfConditionUnitTest.cs" />
+    <Compile Include="MethodUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
