@@ -157,9 +157,9 @@ public partial class MainForm : Form
         this.Controls.Add(pictureBox1);
 
         // info label
-        statusLabel.Text = "Position";
+        statusLabel.Text = "Position : ";
         statusLabel.TabIndex = 17;
-        statusLabel.Size = new System.Drawing.Size(55, 20);
+        statusLabel.Size = new System.Drawing.Size(60, 30);
         statusLabel.Location = new System.Drawing.Point(421, 26);
 
         // Set up the form
@@ -196,11 +196,13 @@ public partial class MainForm : Form
             {
                 txtcmd.Text = "RUN";
                 command = "RUN";
-            }
+                    
+                }
         }
 
         if (command == "RUN")
         {
+                
             parser.ResetProgram();
 
             string mainFormProgram = txtMultiline.Text;
@@ -225,7 +227,8 @@ public partial class MainForm : Form
             bool isFillOn = parser.IsFillOn();
             string currentColor = parser.GetCurrentColor();
 
-            statusLabel.Text = $"Position: {currentPosition}";
+
+            statusLabel.Text = $"Position:"+currentPosition;
         }
         else
         {

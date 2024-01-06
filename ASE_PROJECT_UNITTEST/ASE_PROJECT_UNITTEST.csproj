@@ -62,6 +62,7 @@
     <Compile Include="TriangleUnitTest.cs" />
     <Compile Include="IfConditionUnitTest.cs" />
     <Compile Include="MethodUnitTest.cs" />
+    <Compile Include="WhileUnitTest.cs" />
     <Compile Include="VariableUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
