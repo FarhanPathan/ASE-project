@@ -183,7 +183,7 @@ public class CommandParserNew
     public void ExecuteProgram(string program)
     {
         string[] lines = program.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
+        
         int index = 0;
         while (index < lines.Length)
         {

@@ -157,7 +157,9 @@ public partial class MainForm : Form
         this.Controls.Add(pictureBox1);
 
         // info label
-        statusLabel.Text = "Position : ";
+        statusLabel.Text = "Output: ";
+        statusLabel.AutoSize = true;
+            statusLabel.Enabled = true;
         statusLabel.TabIndex = 17;
         statusLabel.Size = new System.Drawing.Size(60, 30);
         statusLabel.Location = new System.Drawing.Point(421, 26);
@@ -202,8 +204,7 @@ public partial class MainForm : Form
 
         if (command == "RUN")
         {
-                
-            parser.ResetProgram();
+                parser.ResetProgram();
 
             string mainFormProgram = txtMultiline.Text;
 
@@ -223,12 +224,7 @@ public partial class MainForm : Form
 
             await Task.WhenAll(mainFormTask, Task.WhenAll(additionalFormTasks));
 
-            Point currentPosition = parser.GetCurrentPosition();
-            bool isFillOn = parser.IsFillOn();
-            string currentColor = parser.GetCurrentColor();
-
-
-            statusLabel.Text = $"Position:"+currentPosition;
+            
         }
         else
         {
@@ -240,21 +236,28 @@ public partial class MainForm : Form
             int i = 0;
             parser.ExecuteCommand(command, ref i);
         }
-    }
+            Point currentPosition = parser.GetCurrentPosition();
+            //statusLabel.Text = $"Position:" + currentPosition;
+
+        }
 
     private void ExecuteProgramOnUIThread(string program)
     {
-        this.Invoke((MethodInvoker)delegate
+            
+            this.Invoke((MethodInvoker)delegate
         {
+            
             // create a new parser for each program
             CommandParserNew parser = new CommandParserNew(resultBoxGraphics);
 
             if (!parser.SyntaxCheckProgram(program))
             {
+                
                 return;
             }
 
             parser.ExecuteProgram(program);
+            
         });
     }
 
